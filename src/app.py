@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from config import config
-from routers import Empleado
+from routers import ambiente
 
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ def page_not_found(error):
 
 if __name__=='__main__':
     app.config.from_object(config['development'])
-    app.register_blueprint(Empleado.main, url_prefix='/api/empleados')
+    app.register_blueprint(ambiente.main, url_prefix='/ambiente')
     app.register_error_handler(404,page_not_found)
     app.run()
 

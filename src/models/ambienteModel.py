@@ -41,9 +41,9 @@ class AmbienteModel():
                 cursor.execute('''
                     INSERT INTO ambiente (nombre_amb,capacidad_amb,ubicacion_amb,descripcion_amb,cod_estado_ambiente,cod_piso,
                     cod_edificio,cod_facultad,cod_tipo_ambiente) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)''', (
-                    ambiente.nombre_amb,ambiente.capacidad_amb,ambiente.ubicacion_amb,ambiente.descripcion_amb,
-                    ambiente.cod_estado_ambiente,ambiente.cod_piso,ambiente.cod_edificio,ambiente.cod_facultad,
-                    ambiente.cod_tipo_ambiente
+                    ambiente.nombre_amb,int(ambiente.capacidad_amb),ambiente.ubicacion_amb,ambiente.descripcion_amb,
+                    int(ambiente.cod_estado_ambiente),int(ambiente.cod_piso),int(ambiente.cod_edificio),int(ambiente.cod_facultad),
+                    int(ambiente.cod_tipo_ambiente)
                 ))
                 affected_rows = cursor.rowcount
                 connection.commit()
@@ -73,8 +73,8 @@ class AmbienteModel():
                 cursor.execute('''UPDATE ambiente SET 
                 nombre_amb = %s, capacidad_amb = %s, ubicacion_amb = %s, descripcion_amb = %s, cod_estado_ambiente = %s, 
                 cod_piso = %s, cod_edificio = %s, cod_facultad = %s, cod_tipo_ambiente = %s WHERE cod_ambiente = %s
-                ''', (ambiente.nombre_amb,ambiente.capacidad_amb,ambiente.ubicacion_amb,ambiente.descripcion_amb,ambiente.cod_estado_ambiente,
-                ambiente.cod_piso,ambiente.cod_edificio,ambiente.cod_facultad,ambiente.cod_tipo_ambiente,ambiente.cod_ambiente
+                ''', (ambiente.nombre_amb,int(ambiente.capacidad_amb),ambiente.ubicacion_amb,ambiente.descripcion_amb,int(ambiente.cod_estado_ambiente),
+                int(ambiente.cod_piso),int(ambiente.cod_edificio),int(ambiente.cod_facultad),int(ambiente.cod_tipo_ambiente),int(ambiente.cod_ambiente)
                 ))
                 affected_rows = cursor.rowcount
                 connection.commit()
