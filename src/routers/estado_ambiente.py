@@ -1,8 +1,6 @@
 from flask import Blueprint,jsonify,request
 from models.estado_ambienteModel import Estado_AmbienteModel
-
 main = Blueprint('estado_ambiente_blueprint', __name__)
-
 @main.route('/all')
 def get_estados_ambientes():
     try:

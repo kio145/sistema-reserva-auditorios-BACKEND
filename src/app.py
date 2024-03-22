@@ -5,7 +5,7 @@ from routers import ambiente,edificio,facultad,piso,tipo_ambiente,estado_ambient
 
 app = Flask(__name__)
 
-#CORS(app,resources = {'*': {'origin':'http//localhost:3000'}})
+CORS(app,resources = {'*': {'origin':'http//localhost:5173'}})
 
 def page_not_found(error):
     return '<h1>Not found page</h1>',404
