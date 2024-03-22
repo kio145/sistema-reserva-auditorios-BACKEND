@@ -1,7 +1,6 @@
 from flask import Blueprint,jsonify,request
 from models.ambienteModel import AmbienteModel
 from models.entities.ambiente import Ambiente
-import uuid
 
 main = Blueprint('ambiente_blueprint',__name__)
 
