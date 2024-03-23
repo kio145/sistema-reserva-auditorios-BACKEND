@@ -203,8 +203,6 @@ alter table AMBIENTE
       on delete restrict on update restrict;
 
 
-/**/
-
 /*Insertando datos*/
 /*Piso*/
 INSERT INTO PISO (NOMBRE_PIS)
