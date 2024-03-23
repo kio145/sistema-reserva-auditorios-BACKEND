@@ -14,10 +14,10 @@ class Ambiente():
     def to_JSON(self):
         return{
             'cod_ambiente' : str(self.cod_ambiente),
-            'nombre_amb' : str(self.nombre_amb),
+            'nombre_amb' : str(self.nombre_amb).strip(),
             'capacidad_amb' : str(self.capacidad_amb),
-            'ubicacion_amb' : str(self.ubicacion_amb),
-            'descripcion_amb' : str(self.descripcion_amb),
+            'ubicacion_amb' : str(self.ubicacion_amb).strip(),
+            'descripcion_amb' : str(self.descripcion_amb).strip(),
             'cod_facultad' : str(self.cod_facultad),
             'cod_estado_ambiente' : str(self.cod_estado_ambiente),
             'cod_piso' : str(self.cod_piso),

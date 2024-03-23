@@ -35,12 +35,13 @@ def add_ambiente():
         cod_edificio = request.json['cod_edificio']
         cod_facultad = request.json['cod_facultad']
         cod_tipo_ambiente = request.json['cod_tipo_ambiente']
-        ambiente = Ambiente(nombre_amb, capacidad_amb, ubicacion_amb, descripcion_amb,
-                            cod_estado_ambiente, cod_piso, cod_edificio, cod_facultad,
-                            cod_tipo_ambiente)
-        affected_rows, cod_ambiente = AmbienteModel.add_ambiente(ambiente)
+        ambiente = Ambiente(0,str(nombre_amb), int(capacidad_amb), str(ubicacion_amb), str(descripcion_amb),
+                            int(cod_estado_ambiente), int(cod_piso), int(cod_edificio), int(cod_facultad),
+                            int(cod_tipo_ambiente))
+        print("Okey1")
+        affected_rows = AmbienteModel.add_ambiente(ambiente)
         if affected_rows == 1:
-            return jsonify(cod_ambiente)
+            return jsonify(affected_rows)
         else:
             return jsonify({'message': "Error al insertar"}), 500
     except Exception as ex:

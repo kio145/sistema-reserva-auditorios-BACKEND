@@ -6,5 +6,5 @@ class Edificio():
     def to_JSON(self):
         return{
             'cod_edificio' : str(self.cod_edificio),
-            'nombre_edi' : str(self.nombre_edi)
+            'nombre_edi' : str(self.nombre_edi).strip()
         }

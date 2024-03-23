@@ -6,5 +6,5 @@ class Estado_Ambiente():
     def to_JSON(self):
         return{
             'cod_estado_ambiente' : str(self.cod_estado_ambiente),
-            'nombre_ea' : str(self.nombre_ea)
+            'nombre_ea' : str(self.nombre_ea).strip()
         }

@@ -4,7 +4,8 @@ class Piso():
         self.nombre_pis = nombre_pis
     
     def to_JSON(self):
+        print(self.nombre_pis)
         return{
             'cod_piso' : str(self.cod_piso),
-            'nombre_piso' : str(self.nombre_pis)
+            'nombre_piso': self.nombre_pis.encode('latin1').decode('unicode_escape').strip()
         }

@@ -11,7 +11,7 @@ class AmbienteModel():
                 cursor.execute('SELECT cod_ambiente,nombre_amb,descripcion_amb FROM ambiente;')
                 resultset = cursor.fetchall()
                 for row in resultset:
-                    ambientes.append(Ambiente(row[0],row[1],row[2]).to_JSON())
+                    ambientes.append(Ambiente(cod_ambiente=row[0],nombre_amb=row[1],descripcion_amb=row[2]).to_JSON())
             connection.close()
             return ambientes
         except Exception as ex:
@@ -22,7 +22,7 @@ class AmbienteModel():
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM ambiente WHERE cod_ambiente = %s',(id,))
+                cursor.execute('SELECT cod_ambiente,nombre_amb,capacidad_amb,ubicacion_amb,descripcion_amb,cod_facultad,cod_estado_ambiente,cod_piso,cod_tipo_ambiente,cod_edificio FROM ambiente WHERE cod_ambiente = %s',(id,))
                 row = cursor.fetchone()
                 ambiente = None
                 if row != None:
@@ -37,13 +37,15 @@ class AmbienteModel():
     def add_ambiente(self,ambiente):
         try:
             connection = get_connection()
+            print("Okey 2")
+            print(ambiente.cod_piso)
             with connection.cursor() as cursor:
                 cursor.execute('''
                     INSERT INTO ambiente (nombre_amb,capacidad_amb,ubicacion_amb,descripcion_amb,cod_estado_ambiente,cod_piso,
                     cod_edificio,cod_facultad,cod_tipo_ambiente) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)''', (
-                    ambiente.nombre_amb,int(ambiente.capacidad_amb),ambiente.ubicacion_amb,ambiente.descripcion_amb,
-                    int(ambiente.cod_estado_ambiente),int(ambiente.cod_piso),int(ambiente.cod_edificio),int(ambiente.cod_facultad),
-                    int(ambiente.cod_tipo_ambiente)
+                    ambiente.nombre_amb,ambiente.capacidad_amb,ambiente.ubicacion_amb,ambiente.descripcion_amb,
+                    ambiente.cod_estado_ambiente,ambiente.cod_piso,ambiente.cod_edificio,ambiente.cod_facultad,
+                    ambiente.cod_tipo_ambiente
                 ))
                 affected_rows = cursor.rowcount
                 connection.commit()
@@ -73,8 +75,8 @@ class AmbienteModel():
                 cursor.execute('''UPDATE ambiente SET 
                 nombre_amb = %s, capacidad_amb = %s, ubicacion_amb = %s, descripcion_amb = %s, cod_estado_ambiente = %s, 
                 cod_piso = %s, cod_edificio = %s, cod_facultad = %s, cod_tipo_ambiente = %s WHERE cod_ambiente = %s
-                ''', (ambiente.nombre_amb,int(ambiente.capacidad_amb),ambiente.ubicacion_amb,ambiente.descripcion_amb,int(ambiente.cod_estado_ambiente),
-                int(ambiente.cod_piso),int(ambiente.cod_edificio),int(ambiente.cod_facultad),int(ambiente.cod_tipo_ambiente),int(ambiente.cod_ambiente)
+                ''', (ambiente.nombre_amb,ambiente.capacidad_amb,ambiente.ubicacion_amb,ambiente.descripcion_amb,ambiente.cod_estado_ambiente,
+                ambiente.cod_piso,ambiente.cod_edificio,ambiente.cod_facultad,ambiente.cod_tipo_ambiente,ambiente.cod_ambiente
                 ))
                 affected_rows = cursor.rowcount
                 connection.commit()
