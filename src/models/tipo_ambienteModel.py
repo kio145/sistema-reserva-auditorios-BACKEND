@@ -8,7 +8,7 @@ class Tipo_AmbienteModel():
             connection = get_connection()
             tipos_ambientes = []
             with connection.cursor() as cursor:
-                cursor.execute('SELECT cod_tipo_ambiente,nombre_ta FROM tipos_ambientes;')
+                cursor.execute('SELECT cod_tipo_ambiente,nombre_ta FROM tipo_ambiente;')
                 resultset = cursor.fetchall()
                 for row in resultset:
                     tipos_ambientes.append(Tipo_Ambiente(row[0],row[1]).to_JSON())

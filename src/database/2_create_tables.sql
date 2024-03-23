@@ -1,8 +1,8 @@
-/*Crea la base de datos*/
+/*==============================================================*/
+/* DBMS name:      PostgreSQL 8                                 */
+/* Created on:     23/03/2024 0:09:15                           */
+/*==============================================================*/
 
-CREATE DATABASE sistemareservadb;
-
-/*Crea las tablas y relaciones de la base de datos con idioms*/
 
 drop index ENCUENTRA1_FK;
 
@@ -134,7 +134,7 @@ COD_ESTADO_AMBIENTE
 /*==============================================================*/
 create table FACULTAD (
    COD_FACULTAD         SERIAL               not null,
-   NOMBRE_FAC           CHAR(20)             not null,
+   NOMBRE_FAC           CHAR(50)             not null,
    constraint PK_FACULTAD primary key (COD_FACULTAD)
 );
 
@@ -202,59 +202,3 @@ alter table AMBIENTE
       references FACULTAD (COD_FACULTAD)
       on delete restrict on update restrict;
 
-
-/*Insertando datos*/
-/*Piso*/
-INSERT INTO PISO (NOMBRE_PIS)
-VALUES 
-    ('Sótano'),
-    ('Planta Baja'),
-    ('Primer Piso'),
-    ('Segundo Piso'),
-    ('Tercer Piso'),
-    ('Cuarto Piso'),
-    ('Quinto Piso'),
-    ('Sexto Piso'),
-    ('Séptimo Piso'),
-    ('Octavo Piso'),
-    ('Noveno Piso'),
-    ('Décimo Piso');
-
-
-/*Edificio*/
-INSERT INTO EDIFICIO (NOMBRE_EDI)
-VALUES 
-    ('Edificio A'),
-    ('Edificio B'),
-    ('Edificio C'),
-    ('Edificio D');
-
-
-/*Facultad*/
-INSERT INTO FACULTAD (NOMBRE_FAC)
-VALUES 
-    ('Facultad de Ciencias'),
-    ('Facultad de Ingeniería'),
-    ('Facultad de Artes'),
-    ('Facultad de Derecho');
-
-/*Tipo ambiente*/
-INSERT INTO TIPO_AMBIENTE (NOMBRE_TA)
-VALUES 
-    ('Laboratorio'),
-    ('Aula'),
-    ('Oficina'),
-    ('Sala de Conferencias');
-
-/*Estado ambiente*/
-create table ESTADO_AMBIENTE (
-   COD_ESTADO_AMBIENTE  SERIAL               not null,
-   NOMBRE_EA            CHAR(15)             not null,
-   constraint PK_ESTADO_AMBIENTE primary key (COD_ESTADO_AMBIENTE)
-);
-
-/*Estado ambiente*/
-INSERT INTO ESTADO_AMBIENTE (NOMBRE_EA)
-VALUES 
-    ('Disponible'),
-    ('No Disponible');
