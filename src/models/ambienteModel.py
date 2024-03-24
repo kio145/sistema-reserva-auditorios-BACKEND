@@ -1,9 +1,11 @@
 from database.db import get_connection
 from .entities.ambiente import Ambiente
+from utils.transformacion import Transformacion
+from utils.generador import Generador
 
 class AmbienteModel():
     @classmethod
-    def get_ambientes(self):
+    def get_ambientes_all(self):
         try:
             connection = get_connection()
             ambientes = []
@@ -16,9 +18,26 @@ class AmbienteModel():
             return ambientes
         except Exception as ex:
             raise Exception(ex)
+    
+    @classmethod
+    def get_ambientes_filter(self,filtro):
+        pFiltro = Transformacion.convertirTuplaFiltraddor(filtro)
+        sql = Generador.generadorSql(pFiltro)
+        try:
+            connection = get_connection()
+            ambientes = []
+            with connection.cursor() as cursor:
+                cursor.execute(sql)
+                resultset = cursor.fetchall()
+                for row in resultset:
+                    ambientes.append(Ambiente(cod_ambiente=row[0],nombre_amb=row[1],cod_estado_ambiente=row[2],capacidad_amb=row[3]).to_JSONALL())
+            connection.close()
+            return ambientes
+        except Exception as ex:
+            raise Exception(ex)
 
     @classmethod
-    def get_ambiente(self,id):
+    def get_ambiente_one(self,id):
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
@@ -37,7 +56,6 @@ class AmbienteModel():
     def add_ambiente(self,ambiente):
         try:
             connection = get_connection()
-            print("Okey 2")
             print(ambiente.cod_piso)
             with connection.cursor() as cursor:
                 cursor.execute('''

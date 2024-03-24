@@ -5,17 +5,28 @@ from models.entities.ambiente import Ambiente
 main = Blueprint('ambiente_blueprint',__name__)
 
 @main.route('/all')
-def get_ambientes():
+def get_ambientes_all():
     try:
-        ambientes = AmbienteModel.get_ambientes()
+        ambientes = AmbienteModel.get_ambientes_all()
         return jsonify(ambientes)
     except Exception as ex:
         return jsonify({'message':str(ex)}),500
 
 @main.route('/one/<id>')
-def get_ambiente(id):
+def get_ambiente_one(id):
     try:
-        ambiente = AmbienteModel.get_ambiente(id)
+        ambiente = AmbienteModel.get_ambiente_one(id)
+        if ambiente != None:
+            return jsonify(ambiente)
+        else:
+            return jsonify({}),404
+    except Exception as ex:
+        return jsonify({'message':str(ex)}),500
+
+@main.route('/filter/<filtro>')
+def get_ambientes_filter(filtro):
+    try:
+        ambiente = AmbienteModel.get_ambientes_filter(filtro)
         if ambiente != None:
             return jsonify(ambiente)
         else:

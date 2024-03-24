@@ -28,4 +28,4 @@ Estas no son mas que las rutas para consumir cierto recurso de la api rest.
 * ruta: ``http://127.0.0.1:5000/ambiente/add``, agrega un nuevo ambiente a la base de datos.
 * ruta: ``http://127.0.0.1:5000/ambiente/delete/id``, elimina un ambiente de la base de datos.
 * ruta: ``http://127.0.0.1:5000/ambiente/update/id``, actualiza un ambiente de la base de datos.
-
+* ruta: ``http://127.0.0.1:5000/ambiente/filter/"filtro"``, nos proporciona la informacion de todos los ambientes registrados en la base de datos pero con la diferencia de realizar filtrados, para ello se recomienda usar este formato de string ``"1,2,9,-1"`` donde ``-1`` indica que no se esta filtrando por ese parametro, el primer parametro es ``Tipo de ambiente``, el segundo es ``Facultad``, el tercero es ``Edificio`` y el ultimo es ``Estado``.
