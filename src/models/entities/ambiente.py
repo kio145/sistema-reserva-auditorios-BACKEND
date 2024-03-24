@@ -24,3 +24,11 @@ class Ambiente():
             'cod_tipo_ambiente' : str(self.cod_tipo_ambiente),
             'cod_edificio' : str(self.cod_edificio)
         }
+
+    def to_JSONALL(self):
+        return{
+            'cod_ambiente' : str(self.cod_ambiente),
+            'nombre_amb' : str(self.nombre_amb).strip(),
+            'estado_ambiente' : str(self.cod_estado_ambiente),
+            'capacidad_amb' : str(self.capacidad_amb)
+        }
