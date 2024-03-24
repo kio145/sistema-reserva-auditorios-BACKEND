@@ -29,6 +29,6 @@ class Ambiente():
         return{
             'cod_ambiente' : str(self.cod_ambiente),
             'nombre_amb' : str(self.nombre_amb).strip(),
-            'estado_ambiente' : str(self.cod_estado_ambiente),
+            'estado_ambiente' : str(self.cod_estado_ambiente).strip(),
             'capacidad_amb' : str(self.capacidad_amb)
         }
