@@ -1,19 +1,19 @@
 from database.db import get_connection
-from .entities.edificio import Edificio
+from .entities.edificacion import Edificacion
 
-class EdificioModel():
+class EdificacionModel():
     @classmethod
-    def get_edificios(self):
+    def get_edificaciones(self):
         try:
             connection = get_connection()
-            edificios = []
+            edificaciones = []
             with connection.cursor() as cursor:
-                cursor.execute('SELECT cod_edificio,nombre_edi FROM edificio;')
+                cursor.execute('SELECT cod_edificacion,nombre_edi FROM edificacion;')
                 resultset = cursor.fetchall()
                 for row in resultset:
-                    edificios.append(Edificio(row[0],row[1]).to_JSON())
+                    edificaciones.append(Edificacion(row[0],row[1]).to_JSON())
             connection.close()
-            return edificios
+            return edificaciones
         except Exception as ex:
             raise Exception(ex)
         

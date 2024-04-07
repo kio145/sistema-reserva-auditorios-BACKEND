@@ -19,7 +19,7 @@ El proyecto consiste en una aplicacion wep para poder realizar reservar de ambie
 ### Endpoints definidos
 Estas no son mas que las rutas para consumir cierto recurso de la api rest.
 * ruta: ``http://127.0.0.1:5000/piso/all``, nos proporciona la informacion de todos los pisos registrados en la base de datos.
-* ruta: ``http://127.0.0.1:5000/edificio/all``, nos proporciona la informacion de todos los edificios registrados en la base de datos.
+* ruta: ``http://127.0.0.1:5000/edificacion/all``, nos proporciona la informacion de todos las edificaciones registrados en la base de datos.
 * ruta: ``http://127.0.0.1:5000/facultad/all``, nos proporciona la informacion de todas las facultades registradas en la base de datos.
 * ruta: ``http://127.0.0.1:5000/estado_ambiente/all``, nos proporciona la informacion de todos los estados de ambientes registrados en la base de datos.
 * ruta: ``http://127.0.0.1:5000/tipo_ambiente/all``, nos proporciona la informacion de todos los tipos de ambientes registrados en la base de datos.
