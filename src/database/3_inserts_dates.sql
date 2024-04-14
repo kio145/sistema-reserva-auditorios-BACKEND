@@ -45,3 +45,24 @@ INSERT INTO ESTADO_AMBIENTE (NOMBRE_EA)
 VALUES 
     ('Disponible'),
     ('No Disponible');
+
+/*Tipo_Final*/
+INSERT INTO TIPO_FINAL (NOMBRE_TF) VALUES
+    ('Docente'),
+    ('Auxiliar'),
+    ('Estudiante');
+
+INSERT INTO DIA (NOMBRE_DIA) VALUES
+    ('Lunes'),
+    ('Martes'),
+    ('Miercoles'),
+    ('Jueves'),
+    ('Viernes'),
+    ('Sabado'),
+    ('Domingo');
+
+INSERT INTO TIPO_REPORTE (NOMBRE_TR) VALUES
+    ('Emergencia'),
+    ('Notificacion');
+
+
