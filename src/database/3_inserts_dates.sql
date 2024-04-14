@@ -16,7 +16,7 @@ VALUES
 
 
 /*Edificio*/
-INSERT INTO EDIFICIO (NOMBRE_EDI)
+INSERT INTO EDIFICACION (NOMBRE_EDI)
 VALUES 
     ('Edificio A'),
     ('Edificio B'),
