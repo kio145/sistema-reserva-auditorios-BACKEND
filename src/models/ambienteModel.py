@@ -77,6 +77,7 @@ class AmbienteModel():
             connection = get_connection()
             with connection.cursor() as cursor:
                 print("E1")
+                print("Cod:",ambiente.cod_ambiente)
                 cursor.execute('DELETE FROM ambiente WHERE cod_ambiente = %s',(int(ambiente.cod_ambiente)))
                 print("E2")
                 affected_rows = cursor.rowcount
