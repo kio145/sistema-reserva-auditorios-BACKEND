@@ -20,4 +20,9 @@ if __name__=='__main__':
     app.register_blueprint(estado_ambiente.main, url_prefix='/estado_ambiente')
     app.register_error_handler(404,page_not_found)
     app.run()
-
+    
+# Tablero.obtenerPromedio(persona.getNota().getPrimerParcial())|
+'''
+    nota = persona.getNota()
+    primer_parcial = nota.getPrimerParcial()
+'''

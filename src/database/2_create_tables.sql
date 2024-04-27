@@ -669,4 +669,3 @@ alter table USUARIO
    add constraint FK_USUARIO_ES5_ADMINIST foreign key (ADM_COD_USUARIO)
       references ADMINISTRADOR (COD_USUARIO)
       on delete restrict on update restrict;
-
