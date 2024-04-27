@@ -15,7 +15,7 @@ class Ambiente():
         
     def to_JSON(self):
         return{
-            'cod_ambiente' : str(self.cod_ambiente),
+            'cod_ambiente' : self.cod_ambiente,
             'nombre_amb' : str(self.nombre_amb).strip(),
             'capacidad_amb' : str(self.capacidad_amb),
             'ubicacion_amb' : str(self.ubicacion_amb).strip(),
