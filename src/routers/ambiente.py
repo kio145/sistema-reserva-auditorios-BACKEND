@@ -39,7 +39,6 @@ def get_ambientes_filter(filtro):
 def add_ambiente():
     try:
         nombre_amb = request.json['nombre_amb']
-        nombre_amb = request.json['nombredssdsdf']
         capacidad_amb = request.json['capacidad_amb']
         ubicacion_amb = request.json['ubicacion_amb']
         descripcion_amb = request.json['descripcion_amb']
