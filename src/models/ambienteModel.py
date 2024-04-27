@@ -41,7 +41,7 @@ class AmbienteModel():
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
-                cursor.execute('SELECT cod_ambiente,nombre_amb,capacidad_amb,ubicacion_amb,descripcion_amb,cod_facultad,cod_estado_ambiente,cod_piso,cod_tipo_ambiente,cod_edificio FROM ambiente WHERE cod_ambiente = %s',(id,))
+                cursor.execute('SELECT cod_ambiente,nombre_amb,capacidad_amb,ubicacion_amb,descripcion_amb,cod_facultad,cod_estado_ambiente,cod_piso,cod_tipo_ambiente,cod_edificacion FROM ambiente WHERE cod_ambiente = %s',(id,))
                 row = cursor.fetchone()
                 ambiente = None
                 if row != None:
