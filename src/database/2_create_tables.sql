@@ -1,3 +1,9 @@
+/*==============================================================*/
+/* DBMS name:      PostgreSQL 8                                 */
+/* Created on:     26/04/2024 23:41:09                          */
+/*==============================================================*/
+
+
 drop index ADMINISTRADOR_PK;
 
 drop table ADMINISTRADOR;
@@ -30,13 +36,11 @@ drop index BLOQUE_PK;
 
 drop table BLOQUE;
 
-drop index HABILITA_FK;
+drop index TIENE3_FK;
 
-drop index CONTIENE_FK;
+drop index COMUNICADO_PK;
 
-drop index DETALLE_PERIODO_PK;
-
-drop table DETALLE_PERIODO;
+drop table COMUNICADO;
 
 drop index DIA_PK;
 
@@ -54,27 +58,61 @@ drop index FACULTAD_PK;
 
 drop table FACULTAD;
 
+drop index ES4_FK;
+
 drop index ES_FK;
 
 drop index FINAL_PK;
 
 drop table FINAL;
 
-drop index PERIODO_PK;
+drop index GRUPO_PK;
 
-drop table PERIODO;
+drop table GRUPO;
+
+drop index IMPARTE_FK;
+
+drop index EN2_FK;
+
+drop index EN1_FK;
+
+drop index IMPARTICION_PK;
+
+drop table IMPARTICION;
+
+drop index MATERIA_PK;
+
+drop table MATERIA;
+
+drop index RECIBE_FK;
+
+drop index ENVIA_FK;
+
+drop index MENSAJE_PK;
+
+drop table MENSAJE;
+
+drop index TIENE5_FK;
+
+drop index RECIBE1_FK;
+
+drop index ENVIA1_FK;
+
+drop index NOTIFICACION_RESERVA_PK;
+
+drop table NOTIFICACION_RESERVA;
+
+drop index HABILITADO1_FK;
+
+drop index PERIODO_RESERVA_PK;
+
+drop table PERIODO_RESERVA;
 
 drop index PISO_PK;
 
 drop table PISO;
 
-drop index REALIZA1_FK;
-
-drop index ES7_FK;
-
-drop index REPORTE_PK;
-
-drop table REPORTE;
+drop index TIENE4_FK;
 
 drop index TIENE2_FK;
 
@@ -95,10 +133,6 @@ drop table TIPO_AMBIENTE;
 drop index TIPO_FINAL_PK;
 
 drop table TIPO_FINAL;
-
-drop index TIPO_REPORTE_PK;
-
-drop table TIPO_REPORTE;
 
 drop index ES5_FK;
 
@@ -180,6 +214,8 @@ create table AMBIENTE (
    CAPACIDAD_AMB        INT4                 not null,
    UBICACION_AMB        CHAR(100)            not null,
    DESCRIPCION_AMB      CHAR(255)            not null,
+   ALBERGACION_MAX_AMB  INT4                 not null,
+   ALBERGACION_MIN_AMB  INT4                 not null,
    constraint PK_AMBIENTE primary key (COD_AMBIENTE)
 );
 
@@ -244,37 +280,28 @@ COD_BLOQUE
 );
 
 /*==============================================================*/
-/* Table: DETALLE_PERIODO                                       */
+/* Table: COMUNICADO                                            */
 /*==============================================================*/
-create table DETALLE_PERIODO (
-   COD_PERIODO          INT4                 not null,
+create table COMUNICADO (
+   COD_COMUNICADO       SERIAL               not null,
    COD_TIPO_FINAL       INT4                 not null,
-   COD_DETALLE_DP       SERIAL               not null,
-   FECHA_INICIO_DP      DATE                 not null,
-   FECHA_FIN_DP         DATE                 not null,
-   constraint PK_DETALLE_PERIODO primary key (COD_PERIODO, COD_TIPO_FINAL, COD_DETALLE_DP)
+   TITULO_COM           CHAR(40)             not null,
+   ASUNTO_COM           CHAR(500)            not null,
+   FECHA_EMISION_COM    DATE                 not null,
+   constraint PK_COMUNICADO primary key (COD_COMUNICADO)
 );
 
 /*==============================================================*/
-/* Index: DETALLE_PERIODO_PK                                    */
+/* Index: COMUNICADO_PK                                         */
 /*==============================================================*/
-create unique index DETALLE_PERIODO_PK on DETALLE_PERIODO (
-COD_PERIODO,
-COD_TIPO_FINAL,
-COD_DETALLE_DP
+create unique index COMUNICADO_PK on COMUNICADO (
+COD_COMUNICADO
 );
 
 /*==============================================================*/
-/* Index: CONTIENE_FK                                           */
+/* Index: TIENE3_FK                                             */
 /*==============================================================*/
-create  index CONTIENE_FK on DETALLE_PERIODO (
-COD_PERIODO
-);
-
-/*==============================================================*/
-/* Index: HABILITA_FK                                           */
-/*==============================================================*/
-create  index HABILITA_FK on DETALLE_PERIODO (
+create  index TIENE3_FK on COMUNICADO (
 COD_TIPO_FINAL
 );
 
@@ -346,16 +373,17 @@ COD_FACULTAD
 /* Table: FINAL                                                 */
 /*==============================================================*/
 create table FINAL (
-   COD_USUARIO          INT4                 not null,
    COD_TIPO_FINAL       INT4                 not null,
+   COD_USUARIO          INT4                 not null,
    CODIGO_SIS_FIN       CHAR(50)             not null,
-   constraint PK_FINAL primary key (COD_USUARIO)
+   constraint PK_FINAL primary key (COD_TIPO_FINAL, COD_USUARIO)
 );
 
 /*==============================================================*/
 /* Index: FINAL_PK                                              */
 /*==============================================================*/
 create unique index FINAL_PK on FINAL (
+COD_TIPO_FINAL,
 COD_USUARIO
 );
 
@@ -367,20 +395,193 @@ COD_TIPO_FINAL
 );
 
 /*==============================================================*/
-/* Table: PERIODO                                               */
+/* Index: ES4_FK                                                */
 /*==============================================================*/
-create table PERIODO (
-   COD_PERIODO          SERIAL               not null,
-   FECHA_INICIO_PER     DATE                 not null,
-   FECHA_FIN_PER        DATE                 not null,
-   constraint PK_PERIODO primary key (COD_PERIODO)
+create  index ES4_FK on FINAL (
+COD_USUARIO
 );
 
 /*==============================================================*/
-/* Index: PERIODO_PK                                            */
+/* Table: GRUPO                                                 */
 /*==============================================================*/
-create unique index PERIODO_PK on PERIODO (
-COD_PERIODO
+create table GRUPO (
+   COD_GRUPO            SERIAL               not null,
+   NOMBRE_GRU           CHAR(30)             not null,
+   constraint PK_GRUPO primary key (COD_GRUPO)
+);
+
+/*==============================================================*/
+/* Index: GRUPO_PK                                              */
+/*==============================================================*/
+create unique index GRUPO_PK on GRUPO (
+COD_GRUPO
+);
+
+/*==============================================================*/
+/* Table: IMPARTICION                                           */
+/*==============================================================*/
+create table IMPARTICION (
+   COD_TIPO_FINAL       INT4                 not null,
+   COD_USUARIO          INT4                 not null,
+   COD_MATERIA          INT4                 not null,
+   COD_GRUPO            INT4                 not null,
+   COD_IMPARTICION      SERIAL               not null,
+   CANTIDAD_ESTUDIANTES_IMP INT4                 not null,
+   constraint PK_IMPARTICION primary key (COD_TIPO_FINAL, COD_USUARIO, COD_MATERIA, COD_GRUPO, COD_IMPARTICION)
+);
+
+/*==============================================================*/
+/* Index: IMPARTICION_PK                                        */
+/*==============================================================*/
+create unique index IMPARTICION_PK on IMPARTICION (
+COD_TIPO_FINAL,
+COD_USUARIO,
+COD_MATERIA,
+COD_GRUPO,
+COD_IMPARTICION
+);
+
+/*==============================================================*/
+/* Index: EN1_FK                                                */
+/*==============================================================*/
+create  index EN1_FK on IMPARTICION (
+COD_MATERIA
+);
+
+/*==============================================================*/
+/* Index: EN2_FK                                                */
+/*==============================================================*/
+create  index EN2_FK on IMPARTICION (
+COD_GRUPO
+);
+
+/*==============================================================*/
+/* Index: IMPARTE_FK                                            */
+/*==============================================================*/
+create  index IMPARTE_FK on IMPARTICION (
+COD_TIPO_FINAL,
+COD_USUARIO
+);
+
+/*==============================================================*/
+/* Table: MATERIA                                               */
+/*==============================================================*/
+create table MATERIA (
+   COD_MATERIA          SERIAL               not null,
+   NOMBRE_MAT           CHAR(30)             not null,
+   constraint PK_MATERIA primary key (COD_MATERIA)
+);
+
+/*==============================================================*/
+/* Index: MATERIA_PK                                            */
+/*==============================================================*/
+create unique index MATERIA_PK on MATERIA (
+COD_MATERIA
+);
+
+/*==============================================================*/
+/* Table: MENSAJE                                               */
+/*==============================================================*/
+create table MENSAJE (
+   COD_USUARIO          INT4                 not null,
+   USU_COD_USUARIO      INT4                 not null,
+   COD_MENSAJE          SERIAL               not null,
+   CONTENIDO_MEN        CHAR(150)            not null,
+   FECHA_EMISION_MEN    DATE                 not null,
+   constraint PK_MENSAJE primary key (COD_USUARIO, USU_COD_USUARIO, COD_MENSAJE)
+);
+
+/*==============================================================*/
+/* Index: MENSAJE_PK                                            */
+/*==============================================================*/
+create unique index MENSAJE_PK on MENSAJE (
+COD_USUARIO,
+USU_COD_USUARIO,
+COD_MENSAJE
+);
+
+/*==============================================================*/
+/* Index: ENVIA_FK                                              */
+/*==============================================================*/
+create  index ENVIA_FK on MENSAJE (
+COD_USUARIO
+);
+
+/*==============================================================*/
+/* Index: RECIBE_FK                                             */
+/*==============================================================*/
+create  index RECIBE_FK on MENSAJE (
+USU_COD_USUARIO
+);
+
+/*==============================================================*/
+/* Table: NOTIFICACION_RESERVA                                  */
+/*==============================================================*/
+create table NOTIFICACION_RESERVA (
+   USU_COD_USUARIO      INT4                 not null,
+   COD_USUARIO          INT4                 not null,
+   COD_AMBIENTE         INT4                 not null,
+   COD_NOTIFICACION_RESERVA SERIAL               not null,
+   FECHA_NR             DATE                 not null,
+   HORA_NR              TIME                 not null,
+   constraint PK_NOTIFICACION_RESERVA primary key (USU_COD_USUARIO, COD_USUARIO, COD_AMBIENTE, COD_NOTIFICACION_RESERVA)
+);
+
+/*==============================================================*/
+/* Index: NOTIFICACION_RESERVA_PK                               */
+/*==============================================================*/
+create unique index NOTIFICACION_RESERVA_PK on NOTIFICACION_RESERVA (
+USU_COD_USUARIO,
+COD_USUARIO,
+COD_AMBIENTE,
+COD_NOTIFICACION_RESERVA
+);
+
+/*==============================================================*/
+/* Index: ENVIA1_FK                                             */
+/*==============================================================*/
+create  index ENVIA1_FK on NOTIFICACION_RESERVA (
+USU_COD_USUARIO
+);
+
+/*==============================================================*/
+/* Index: RECIBE1_FK                                            */
+/*==============================================================*/
+create  index RECIBE1_FK on NOTIFICACION_RESERVA (
+COD_USUARIO
+);
+
+/*==============================================================*/
+/* Index: TIENE5_FK                                             */
+/*==============================================================*/
+create  index TIENE5_FK on NOTIFICACION_RESERVA (
+COD_AMBIENTE
+);
+
+/*==============================================================*/
+/* Table: PERIODO_RESERVA                                       */
+/*==============================================================*/
+create table PERIODO_RESERVA (
+   COD_PERIODO_RESERVA  SERIAL               not null,
+   COD_TIPO_FINAL       INT4                 not null,
+   FECHA_INICIO_PER     DATE                 not null,
+   FECHA_FIN_PER        DATE                 not null,
+   NOTIFICACION_PER     DATE                 not null,
+   constraint PK_PERIODO_RESERVA primary key (COD_PERIODO_RESERVA)
+);
+
+/*==============================================================*/
+/* Index: PERIODO_RESERVA_PK                                    */
+/*==============================================================*/
+create unique index PERIODO_RESERVA_PK on PERIODO_RESERVA (
+COD_PERIODO_RESERVA
+);
+
+/*==============================================================*/
+/* Index: HABILITADO1_FK                                        */
+/*==============================================================*/
+create  index HABILITADO1_FK on PERIODO_RESERVA (
+COD_TIPO_FINAL
 );
 
 /*==============================================================*/
@@ -400,59 +601,30 @@ COD_PISO
 );
 
 /*==============================================================*/
-/* Table: REPORTE                                               */
-/*==============================================================*/
-create table REPORTE (
-   COD_REPORTE          SERIAL               not null,
-   COD_TIPO_REPORTE     INT4                 not null,
-   COD_USUARIO          INT4                 not null,
-   TITULO_REP           CHAR(30)             not null,
-   DETALLE_REP          CHAR(200)            not null,
-   constraint PK_REPORTE primary key (COD_REPORTE)
-);
-
-/*==============================================================*/
-/* Index: REPORTE_PK                                            */
-/*==============================================================*/
-create unique index REPORTE_PK on REPORTE (
-COD_REPORTE
-);
-
-/*==============================================================*/
-/* Index: ES7_FK                                                */
-/*==============================================================*/
-create  index ES7_FK on REPORTE (
-COD_TIPO_REPORTE
-);
-
-/*==============================================================*/
-/* Index: REALIZA1_FK                                           */
-/*==============================================================*/
-create  index REALIZA1_FK on REPORTE (
-COD_USUARIO
-);
-
-/*==============================================================*/
 /* Table: RESERVA                                               */
 /*==============================================================*/
 create table RESERVA (
+   COD_TIPO_FINAL       INT4                 not null,
    COD_USUARIO          INT4                 not null,
    COD_DIA              INT4                 not null,
    COD_BLOQUE           INT4                 not null,
    COD_AMBIENTE         INT4                 not null,
+   COD_PERIODO_RESERVA  INT4                 not null,
    COD_RESERVA          SERIAL               not null,
    FECHA_RES            DATE                 not null,
-   constraint PK_RESERVA primary key (COD_USUARIO, COD_DIA, COD_BLOQUE, COD_AMBIENTE, COD_RESERVA)
+   constraint PK_RESERVA primary key (COD_TIPO_FINAL, COD_USUARIO, COD_DIA, COD_BLOQUE, COD_AMBIENTE, COD_PERIODO_RESERVA, COD_RESERVA)
 );
 
 /*==============================================================*/
 /* Index: RESERVA_PK                                            */
 /*==============================================================*/
 create unique index RESERVA_PK on RESERVA (
+COD_TIPO_FINAL,
 COD_USUARIO,
 COD_DIA,
 COD_BLOQUE,
 COD_AMBIENTE,
+COD_PERIODO_RESERVA,
 COD_RESERVA
 );
 
@@ -460,6 +632,7 @@ COD_RESERVA
 /* Index: REALIZA_FK                                            */
 /*==============================================================*/
 create  index REALIZA_FK on RESERVA (
+COD_TIPO_FINAL,
 COD_USUARIO
 );
 
@@ -482,6 +655,13 @@ COD_BLOQUE
 /*==============================================================*/
 create  index TIENE2_FK on RESERVA (
 COD_AMBIENTE
+);
+
+/*==============================================================*/
+/* Index: TIENE4_FK                                             */
+/*==============================================================*/
+create  index TIENE4_FK on RESERVA (
+COD_PERIODO_RESERVA
 );
 
 /*==============================================================*/
@@ -517,27 +697,12 @@ COD_TIPO_FINAL
 );
 
 /*==============================================================*/
-/* Table: TIPO_REPORTE                                          */
-/*==============================================================*/
-create table TIPO_REPORTE (
-   COD_TIPO_REPORTE     SERIAL               not null,
-   NOMBRE_TR            CHAR(20)             not null,
-   constraint PK_TIPO_REPORTE primary key (COD_TIPO_REPORTE)
-);
-
-/*==============================================================*/
-/* Index: TIPO_REPORTE_PK                                       */
-/*==============================================================*/
-create unique index TIPO_REPORTE_PK on TIPO_REPORTE (
-COD_TIPO_REPORTE
-);
-
-/*==============================================================*/
 /* Table: USUARIO                                               */
 /*==============================================================*/
 create table USUARIO (
    COD_USUARIO          SERIAL               not null,
    ADM_COD_USUARIO      INT4                 null,
+   COD_TIPO_FINAL       INT4                 null,
    FIN_COD_USUARIO      INT4                 null,
    NOMBRE_USU           CHAR(50)             not null,
    CONTRASENIA_USU      CHAR(150)            not null,
@@ -555,6 +720,7 @@ COD_USUARIO
 /* Index: ES3_FK                                                */
 /*==============================================================*/
 create  index ES3_FK on USUARIO (
+COD_TIPO_FINAL,
 FIN_COD_USUARIO
 );
 
@@ -610,13 +776,8 @@ alter table AMBIENTE
       references FACULTAD (COD_FACULTAD)
       on delete restrict on update restrict;
 
-alter table DETALLE_PERIODO
-   add constraint FK_DETALLE__CONTIENE_PERIODO foreign key (COD_PERIODO)
-      references PERIODO (COD_PERIODO)
-      on delete restrict on update restrict;
-
-alter table DETALLE_PERIODO
-   add constraint FK_DETALLE__HABILITA_TIPO_FIN foreign key (COD_TIPO_FINAL)
+alter table COMUNICADO
+   add constraint FK_COMUNICA_TIENE3_TIPO_FIN foreign key (COD_TIPO_FINAL)
       references TIPO_FINAL (COD_TIPO_FINAL)
       on delete restrict on update restrict;
 
@@ -630,14 +791,49 @@ alter table FINAL
       references USUARIO (COD_USUARIO)
       on delete restrict on update restrict;
 
-alter table REPORTE
-   add constraint FK_REPORTE_ES7_TIPO_REP foreign key (COD_TIPO_REPORTE)
-      references TIPO_REPORTE (COD_TIPO_REPORTE)
+alter table IMPARTICION
+   add constraint FK_IMPARTIC_EN1_MATERIA foreign key (COD_MATERIA)
+      references MATERIA (COD_MATERIA)
       on delete restrict on update restrict;
 
-alter table REPORTE
-   add constraint FK_REPORTE_REALIZA1_ADMINIST foreign key (COD_USUARIO)
-      references ADMINISTRADOR (COD_USUARIO)
+alter table IMPARTICION
+   add constraint FK_IMPARTIC_EN2_GRUPO foreign key (COD_GRUPO)
+      references GRUPO (COD_GRUPO)
+      on delete restrict on update restrict;
+
+alter table IMPARTICION
+   add constraint FK_IMPARTIC_IMPARTE_FINAL foreign key (COD_TIPO_FINAL, COD_USUARIO)
+      references FINAL (COD_TIPO_FINAL, COD_USUARIO)
+      on delete restrict on update restrict;
+
+alter table MENSAJE
+   add constraint FK_MENSAJE_ENVIA_USUARIO foreign key (COD_USUARIO)
+      references USUARIO (COD_USUARIO)
+      on delete restrict on update restrict;
+
+alter table MENSAJE
+   add constraint FK_MENSAJE_RECIBE_USUARIO foreign key (USU_COD_USUARIO)
+      references USUARIO (COD_USUARIO)
+      on delete restrict on update restrict;
+
+alter table NOTIFICACION_RESERVA
+   add constraint FK_NOTIFICA_ENVIA1_USUARIO foreign key (USU_COD_USUARIO)
+      references USUARIO (COD_USUARIO)
+      on delete restrict on update restrict;
+
+alter table NOTIFICACION_RESERVA
+   add constraint FK_NOTIFICA_RECIBE1_USUARIO foreign key (COD_USUARIO)
+      references USUARIO (COD_USUARIO)
+      on delete restrict on update restrict;
+
+alter table NOTIFICACION_RESERVA
+   add constraint FK_NOTIFICA_TIENE5_AMBIENTE foreign key (COD_AMBIENTE)
+      references AMBIENTE (COD_AMBIENTE)
+      on delete restrict on update restrict;
+
+alter table PERIODO_RESERVA
+   add constraint FK_PERIODO__HABILITAD_TIPO_FIN foreign key (COD_TIPO_FINAL)
+      references TIPO_FINAL (COD_TIPO_FINAL)
       on delete restrict on update restrict;
 
 alter table RESERVA
@@ -651,8 +847,8 @@ alter table RESERVA
       on delete restrict on update restrict;
 
 alter table RESERVA
-   add constraint FK_RESERVA_REALIZA_FINAL foreign key (COD_USUARIO)
-      references FINAL (COD_USUARIO)
+   add constraint FK_RESERVA_REALIZA_FINAL foreign key (COD_TIPO_FINAL, COD_USUARIO)
+      references FINAL (COD_TIPO_FINAL, COD_USUARIO)
       on delete restrict on update restrict;
 
 alter table RESERVA
@@ -660,12 +856,18 @@ alter table RESERVA
       references AMBIENTE (COD_AMBIENTE)
       on delete restrict on update restrict;
 
+alter table RESERVA
+   add constraint FK_RESERVA_TIENE4_PERIODO_ foreign key (COD_PERIODO_RESERVA)
+      references PERIODO_RESERVA (COD_PERIODO_RESERVA)
+      on delete restrict on update restrict;
+
 alter table USUARIO
-   add constraint FK_USUARIO_ES3_FINAL foreign key (FIN_COD_USUARIO)
-      references FINAL (COD_USUARIO)
+   add constraint FK_USUARIO_ES3_FINAL foreign key (COD_TIPO_FINAL, FIN_COD_USUARIO)
+      references FINAL (COD_TIPO_FINAL, COD_USUARIO)
       on delete restrict on update restrict;
 
 alter table USUARIO
    add constraint FK_USUARIO_ES5_ADMINIST foreign key (ADM_COD_USUARIO)
       references ADMINISTRADOR (COD_USUARIO)
       on delete restrict on update restrict;
+

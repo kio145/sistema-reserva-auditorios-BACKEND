@@ -47,13 +47,13 @@ def add_ambiente():
         albergacion_min_amb = request.json['albergacion_min_amb']
         cod_estado_ambiente = request.json['cod_estado_ambiente']
         cod_piso = request.json['cod_piso']
-        cod_edificio = request.json['cod_edificio']
+        cod_edificacion = request.json['cod_edificacion']
         cod_facultad = request.json['cod_facultad']
         cod_tipo_ambiente = request.json['cod_tipo_ambiente']
         ambiente = Ambiente(nombre_amb=str(nombre_amb), capacidad_amb=int(capacidad_amb),ubicacion_amb= str(ubicacion_amb),
                             descripcion_amb= str(descripcion_amb),
                             albergacion_max_amb=int(albergacion_max_amb), albergacion_min_amb=int(albergacion_min_amb), 
-                            cod_estado_ambiente=int(cod_estado_ambiente), cod_piso= int(cod_piso), cod_edificio = int(cod_edificio),
+                            cod_estado_ambiente=int(cod_estado_ambiente), cod_piso= int(cod_piso), cod_edificio = int(cod_edificacion),
                             cod_facultad= int(cod_facultad), cod_tipo_ambiente = int(cod_tipo_ambiente))
         affected_rows = AmbienteModel.add_ambiente(ambiente)
         if affected_rows == 1:
@@ -83,11 +83,11 @@ def update_ambiente(id):
         descripcion_amb = request.json['descripcion_amb']
         cod_estado_ambiente = request.json['cod_estado_ambiente']
         cod_piso = request.json['cod_piso']
-        cod_edificio = request.json['cod_edificio']
+        cod_edificacion = request.json['cod_edificacion']
         cod_facultad = request.json['cod_facultad']
         cod_tipo_ambiente = request.json['cod_tipo_ambiente']
         ambiente = Ambiente(id, nombre_amb, capacidad_amb, ubicacion_amb, descripcion_amb,
-                            cod_estado_ambiente, cod_piso, cod_edificio, cod_facultad, cod_tipo_ambiente)
+                            cod_estado_ambiente, cod_piso, cod_edificacion, cod_facultad, cod_tipo_ambiente)
         affected_rows = AmbienteModel.update_ambiente(ambiente)
         if affected_rows == 1:
             return jsonify(ambiente.cod_ambiente)
