@@ -52,7 +52,7 @@ def add_ambiente():
         ambiente = Ambiente(nombre_amb=str(nombre_amb), capacidad_amb=int(capacidad_amb),ubicacion_amb= str(ubicacion_amb),
                             descripcion_amb= str(descripcion_amb),
                             albergacion_max_amb=int(albergacion_max_amb), albergacion_min_amb=int(albergacion_min_amb), 
-                            cod_estado_ambiente=int(cod_estado_ambiente), cod_piso= int(cod_piso), cod_edificio = int(cod_edificacion),
+                            cod_estado_ambiente=int(cod_estado_ambiente), cod_piso= int(cod_piso), cod_edificacion = int(cod_edificacion),
                             cod_facultad= int(cod_facultad), cod_tipo_ambiente = int(cod_tipo_ambiente))
         affected_rows = AmbienteModel.add_ambiente(ambiente)
         if affected_rows == 1:
