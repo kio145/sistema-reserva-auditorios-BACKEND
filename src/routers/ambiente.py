@@ -64,7 +64,7 @@ def add_ambiente():
 @main.route('/delete/<id>', methods=['DELETE'])
 def delete_ambiente(id):
     try:
-        ambiente = Ambiente(id)
+        ambiente = Ambiente(cod_ambiente = id)
         affected_rows = AmbienteModel.delete_ambiente(ambiente)
         if affected_rows == 1:
             return jsonify(ambiente.cod_ambiente)
