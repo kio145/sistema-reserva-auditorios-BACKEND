@@ -92,8 +92,8 @@ class AmbienteModel():
                 cursor.execute('''UPDATE ambiente SET 
                 nombre_amb = %s, capacidad_amb = %s, ubicacion_amb = %s, descripcion_amb = %s, cod_estado_ambiente = %s, 
                 cod_piso = %s, cod_edificacion = %s, cod_facultad = %s, cod_tipo_ambiente = %s WHERE cod_ambiente = %s
-                ''', (ambiente.nombre_amb,ambiente.capacidad_amb,ambiente.ubicacion_amb,ambiente.descripcion_amb,ambiente.cod_estado_ambiente,
-                ambiente.cod_piso,ambiente.cod_edificacion,ambiente.cod_facultad,ambiente.cod_tipo_ambiente,ambiente.cod_ambiente
+                ''', (ambiente.nombre_amb,ambiente.capacidad_amb,ambiente.ubicacion_amb,ambiente.descripcion_amb,int(ambiente.cod_estado_ambiente),
+                int(ambiente.cod_piso),int(ambiente.cod_edificacion),int(ambiente.cod_facultad),int(ambiente.cod_tipo_ambiente),int(ambiente.cod_ambiente)
                 ))
                 affected_rows = cursor.rowcount
                 connection.commit()
@@ -111,7 +111,7 @@ class AmbienteModel():
                                UPDATE ambiente 
                                SET albergacion_max_amb = %s, albergacion_min_amb = %s 
                                WHERE cod_ambiente = %s
-                ''', (ambiente.albergacion_max_amb, ambiente.albergacion_min_amb, ambiente.cod_ambiente
+                ''', (int(ambiente.albergacion_max_amb), int(ambiente.albergacion_min_amb), int(ambiente.cod_ambiente)
                 ))
                 affected_rows = cursor.rowcount
                 connection.commit()
