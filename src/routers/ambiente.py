@@ -42,17 +42,14 @@ def add_ambiente():
         capacidad_amb = request.json['capacidad_amb']
         ubicacion_amb = request.json['ubicacion_amb']
         descripcion_amb = request.json['descripcion_amb']
-        albergacion_max_amb = request.json['albergacion_max_amb']
-        albergacion_min_amb = request.json['albergacion_min_amb']
         cod_estado_ambiente = request.json['cod_estado_ambiente']
         cod_piso = request.json['cod_piso']
         cod_edificacion = request.json['cod_edificacion']
         cod_facultad = request.json['cod_facultad']
         cod_tipo_ambiente = request.json['cod_tipo_ambiente']
         ambiente = Ambiente(nombre_amb=str(nombre_amb), capacidad_amb=int(capacidad_amb),ubicacion_amb= str(ubicacion_amb),
-                            descripcion_amb= str(descripcion_amb),
-                            albergacion_max_amb=int(albergacion_max_amb), albergacion_min_amb=int(albergacion_min_amb), 
-                            cod_estado_ambiente=int(cod_estado_ambiente), cod_piso= int(cod_piso), cod_edificacion = int(cod_edificacion),
+                            descripcion_amb= str(descripcion_amb),cod_estado_ambiente=int(cod_estado_ambiente), 
+                            cod_piso= int(cod_piso), cod_edificacion = int(cod_edificacion),
                             cod_facultad= int(cod_facultad), cod_tipo_ambiente = int(cod_tipo_ambiente))
         affected_rows = AmbienteModel.add_ambiente(ambiente)
         if affected_rows == 1:
@@ -85,8 +82,10 @@ def update_ambiente(id):
         cod_edificacion = request.json['cod_edificacion']
         cod_facultad = request.json['cod_facultad']
         cod_tipo_ambiente = request.json['cod_tipo_ambiente']
-        ambiente = Ambiente(id, nombre_amb, capacidad_amb, ubicacion_amb, descripcion_amb,
-                            cod_estado_ambiente, cod_piso, cod_edificacion, cod_facultad, cod_tipo_ambiente)
+        ambiente = Ambiente(cod_ambiente=id, nombre_amb=nombre_amb, capacidad_amb=capacidad_amb, 
+                            ubicacion_amb=ubicacion_amb, descripcion_amb=descripcion_amb,
+                            cod_estado_ambiente=cod_estado_ambiente, cod_piso=cod_piso, cod_edificacion=cod_edificacion, 
+                            cod_facultad=cod_facultad, cod_tipo_ambiente=cod_tipo_ambiente)
         affected_rows = AmbienteModel.update_ambiente(ambiente)
         if affected_rows == 1:
             return jsonify(ambiente.cod_ambiente)
@@ -95,13 +94,24 @@ def update_ambiente(id):
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
 
-@main.route('/setting/<id>', methods=['PUT'])
-def setting_ambiente(id):
+@main.route('/one_setting/<id>')
+def get_one_setting(id):
+    try:
+        ambiente = AmbienteModel.get_one_setting(id)
+        if ambiente != None:
+            return jsonify(ambiente)
+        else:
+            return jsonify({}),404
+    except Exception as ex:
+        return jsonify({'message':str(ex)}),500
+
+@main.route('/update_setting/<id>', methods=['PUT'])
+def update_setting_ambiente(id):
     try:
         albergacion_max_amb = request.json['albergacion_max_amb']
         albergacion_min_amb = request.json['albergacion_min_amb']
-        ambiente = Ambiente(id, albergacion_max_amb, albergacion_min_amb)
-        affected_rows = AmbienteModel.setting_ambiente(ambiente)
+        ambiente = Ambiente(cod_ambiente=id, albergacion_max_amb=albergacion_max_amb, albergacion_min_amb=albergacion_min_amb)
+        affected_rows = AmbienteModel.update_setting_ambiente(ambiente)
         if affected_rows == 1:
             return jsonify(ambiente.cod_ambiente)
         else:

@@ -10,7 +10,7 @@ class Generador():
             if filtro[1] != -1:
                 p2 = 'a.cod_facultad = %s' % filtro[1]
             if filtro[2] != -1:
-                p3 = 'a.cod_edificio = %s' % filtro[2]
+                p3 = 'a.cod_edificacion = %s' % filtro[2]
             if filtro[3] != -1:
                 p4 = 'a.cod_estado_ambiente = %s' % filtro[3]
             sql += (p1 if p1 != '' else '') +(' AND ' if p1 != '' and (p2 != '' or p3 != '' or p4 != '') else '') \

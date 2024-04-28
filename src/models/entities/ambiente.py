@@ -13,26 +13,32 @@ class Ambiente():
         self.cod_tipo_ambiente = cod_tipo_ambiente
         self.cod_edificacion = cod_edificacion
         
-    def to_JSON(self):
+    def to_JSONONE(self):
         return{
             'cod_ambiente' : self.cod_ambiente,
             'nombre_amb' : str(self.nombre_amb).strip(),
-            'capacidad_amb' : str(self.capacidad_amb),
+            'capacidad_amb' : self.capacidad_amb,
             'ubicacion_amb' : str(self.ubicacion_amb).strip(),
             'descripcion_amb' : str(self.descripcion_amb).strip(),
-            'albergacion_max_amb' : str(self.albergacion_max_amb),
-            'albergacion_min_amb' : str(self.albergacion_min_amb),
-            'cod_facultad' : str(self.cod_facultad),
-            'cod_estado_ambiente' : str(self.cod_estado_ambiente),
-            'cod_piso' : str(self.cod_piso),
-            'cod_tipo_ambiente' : str(self.cod_tipo_ambiente),
-            'cod_edificacion' : str(self.cod_edificacion)
+            'cod_facultad' : self.cod_facultad,
+            'cod_estado_ambiente' : self.cod_estado_ambiente,
+            'cod_piso' : self.cod_piso,
+            'cod_tipo_ambiente' : self.cod_tipo_ambiente,
+            'cod_edificacion' : self.cod_edificacion
         }
 
     def to_JSONALL(self):
         return{
-            'cod_ambiente' : str(self.cod_ambiente),
+            'cod_ambiente' : self.cod_ambiente,
             'nombre_amb' : str(self.nombre_amb).strip(),
             'estado_ambiente' : str(self.cod_estado_ambiente).strip(),
-            'capacidad_amb' : str(self.capacidad_amb)
+            'capacidad_amb' : self.capacidad_amb
         }
+    
+    def to_JSONSETTING(self):
+        return{
+            'cod_ambiente' : self.cod_ambiente,
+            'albergacion_max_amb' : self.albergacion_max_amb,
+            'albergacion_min_amb' : self.albergacion_min_amb
+        }
+    

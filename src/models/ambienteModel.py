@@ -41,12 +41,12 @@ class AmbienteModel():
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
-                cursor.execute('SELECT cod_ambiente,nombre_amb,capacidad_amb,ubicacion_amb,descripcion_amb,cod_facultad,cod_estado_ambiente,cod_piso,cod_tipo_ambiente,cod_edificacion FROM ambiente WHERE cod_ambiente = %s',(id,))
+                cursor.execute('SELECT cod_ambiente, nombre_amb, capacidad_amb, ubicacion_amb, descripcion_amb, cod_facultad, cod_estado_ambiente, cod_piso, cod_tipo_ambiente, cod_edificacion FROM ambiente WHERE cod_ambiente = %s',(id,))
                 row = cursor.fetchone()
                 ambiente = None
                 if row != None:
-                    ambiente = Ambiente(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9])
-                    ambiente = ambiente.to_JSON()
+                    ambiente = Ambiente(cod_ambiente=row[0],nombre_amb=row[1],capacidad_amb=row[2],ubicacion_amb=row[3],descripcion_amb=row[4],cod_facultad=row[5],cod_estado_ambiente=row[6],cod_piso=row[7],cod_tipo_ambiente=row[8],cod_edificacion=row[9])
+                    ambiente = ambiente.to_JSONONE()
                 connection.close()
                 return ambiente
         except Exception as ex:
@@ -76,10 +76,7 @@ class AmbienteModel():
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
-                print("E1")
-                print("Cod:",ambiente.cod_ambiente)
-                cursor.execute('DELETE FROM ambiente WHERE cod_ambiente = %s',(ambiente.cod_ambiente))
-                print("E2")
+                cursor.execute('DELETE FROM ambiente WHERE cod_ambiente = %s',(ambiente.cod_ambiente,))
                 affected_rows = cursor.rowcount
                 connection.commit()
             connection.close()
@@ -104,9 +101,25 @@ class AmbienteModel():
             return affected_rows
         except Exception as ex:
             raise Exception(ex)
-    
+
     @classmethod
-    def setting_ambiente(self,ambiente):
+    def get_one_setting(self,id):
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT cod_ambiente, albergacion_max_amb, albergacion_min_amb FROM ambiente WHERE cod_ambiente = %s',(id,))
+                row = cursor.fetchone()
+                ambiente = None
+                if row != None:
+                    ambiente = Ambiente(cod_ambiente=row[0],albergacion_max_amb=row[1],albergacion_min_amb=row[2])
+                    ambiente = ambiente.to_JSONSETTING()
+                connection.close()
+                return ambiente
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
+    def update_setting_ambiente(self,ambiente):
         try:
             connection = get_connection()
             with connection.cursor() as cursor:
