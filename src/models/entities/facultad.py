@@ -5,7 +5,7 @@ class Facultad():
     
     def to_JSON(self):
         return{
-            'cod_facultad' : str(self.cod_facultad),
+            'cod_facultad' : self.cod_facultad,
             'nombre_fac' : str(self.nombre_fac).strip()
         }
     

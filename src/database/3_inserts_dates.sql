@@ -61,8 +61,18 @@ INSERT INTO DIA (NOMBRE_DIA) VALUES
     ('Sabado'),
     ('Domingo');
 
-INSERT INTO TIPO_REPORTE (NOMBRE_TR) VALUES
-    ('Emergencia'),
-    ('Notificacion');
+INSERT INTO bloque (nombre_blo, hora_inicio_blo, hora_fin_blo)
+VALUES 
+('A', '06:45:00', '08:15:00'),
+('B', '08:15:00', '09:45:00'),
+('C', '09:45:00', '11:15:00'),
+('D', '11:15:00', '12:45:00'),
+('E', '12:45:00', '14:15:00'),
+('F', '14:15:00', '15:45:00'),
+('G', '15:45:00', '17:15:00'),
+('H', '17:15:00', '18:45:00'),
+('I', '18:45:00', '20:15:00'),
+('J', '20:15:00', '21:45:00');
+
 
 

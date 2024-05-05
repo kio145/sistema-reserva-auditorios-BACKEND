@@ -5,6 +5,6 @@ class Piso():
     
     def to_JSON(self):
         return{
-            'cod_piso' : str(self.cod_piso),
-            'nombre_piso': self.nombre_pis.encode('latin1').decode('unicode_escape').strip()
+            'cod_piso' : self.cod_piso,
+            'nombre_piso': str(self.nombre_pis).strip()
         }

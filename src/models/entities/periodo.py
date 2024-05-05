@@ -6,7 +6,7 @@ class Periodo():
     
     def to_JSON(self):
         return{
-            'cod_periodo' : str(self.cod_periodo),
+            'cod_periodo' : self.cod_periodo,
             'fecha_inicio_per': str(self.fecha_inicio_per),
             'fecha_fin_per': str(self.fecha_fin_per)
         }

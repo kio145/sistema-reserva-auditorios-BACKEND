@@ -5,6 +5,6 @@ class Tipo_Ambiente():
 
     def to_JSON(self):
         return{
-            'cod_tipo_ambiente' : str(self.cod_tipo_ambiente),
+            'cod_tipo_ambiente' : self.cod_tipo_ambiente,
             'nombre_ta' : str(self.nombre_ta).strip()
         }

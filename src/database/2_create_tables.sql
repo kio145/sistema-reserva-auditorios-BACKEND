@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     26/04/2024 23:41:09                          */
+/* Created on:     05/05/2024 0:13:44                           */
 /*==============================================================*/
 
 
@@ -58,8 +58,6 @@ drop index FACULTAD_PK;
 
 drop table FACULTAD;
 
-drop index ES4_FK;
-
 drop index ES_FK;
 
 drop index FINAL_PK;
@@ -102,8 +100,6 @@ drop index NOTIFICACION_RESERVA_PK;
 
 drop table NOTIFICACION_RESERVA;
 
-drop index HABILITADO1_FK;
-
 drop index PERIODO_RESERVA_PK;
 
 drop table PERIODO_RESERVA;
@@ -112,7 +108,9 @@ drop index PISO_PK;
 
 drop table PISO;
 
-drop index TIENE4_FK;
+drop index EL2_FK;
+
+drop index EL1_FK;
 
 drop index TIENE2_FK;
 
@@ -166,6 +164,7 @@ create table AJUSTE_AMBIENTE (
    COD_BLOQUE           INT4                 not null,
    COD_AMBIENTE         INT4                 not null,
    COD_AJUSTE_AMBIENTE  SERIAL               not null,
+   FECHA_AA             DATE                 not null,
    constraint PK_AJUSTE_AMBIENTE primary key (COD_DIA, COD_BLOQUE, COD_AMBIENTE, COD_AJUSTE_AMBIENTE)
 );
 
@@ -210,7 +209,7 @@ create table AMBIENTE (
    COD_PISO             INT4                 not null,
    COD_TIPO_AMBIENTE    INT4                 not null,
    COD_EDIFICACION      INT4                 not null,
-   NOMBRE_AMB           CHAR(20)             not null,
+   NOMBRE_AMB           CHAR(60)             not null,
    CAPACIDAD_AMB        INT4                 not null,
    UBICACION_AMB        CHAR(100)            not null,
    DESCRIPCION_AMB      CHAR(255)            not null,
@@ -373,17 +372,16 @@ COD_FACULTAD
 /* Table: FINAL                                                 */
 /*==============================================================*/
 create table FINAL (
-   COD_TIPO_FINAL       INT4                 not null,
    COD_USUARIO          INT4                 not null,
+   COD_TIPO_FINAL       INT4                 not null,
    CODIGO_SIS_FIN       CHAR(50)             not null,
-   constraint PK_FINAL primary key (COD_TIPO_FINAL, COD_USUARIO)
+   constraint PK_FINAL primary key (COD_USUARIO)
 );
 
 /*==============================================================*/
 /* Index: FINAL_PK                                              */
 /*==============================================================*/
 create unique index FINAL_PK on FINAL (
-COD_TIPO_FINAL,
 COD_USUARIO
 );
 
@@ -392,13 +390,6 @@ COD_USUARIO
 /*==============================================================*/
 create  index ES_FK on FINAL (
 COD_TIPO_FINAL
-);
-
-/*==============================================================*/
-/* Index: ES4_FK                                                */
-/*==============================================================*/
-create  index ES4_FK on FINAL (
-COD_USUARIO
 );
 
 /*==============================================================*/
@@ -421,20 +412,18 @@ COD_GRUPO
 /* Table: IMPARTICION                                           */
 /*==============================================================*/
 create table IMPARTICION (
-   COD_TIPO_FINAL       INT4                 not null,
    COD_USUARIO          INT4                 not null,
    COD_MATERIA          INT4                 not null,
    COD_GRUPO            INT4                 not null,
    COD_IMPARTICION      SERIAL               not null,
    CANTIDAD_ESTUDIANTES_IMP INT4                 not null,
-   constraint PK_IMPARTICION primary key (COD_TIPO_FINAL, COD_USUARIO, COD_MATERIA, COD_GRUPO, COD_IMPARTICION)
+   constraint PK_IMPARTICION primary key (COD_USUARIO, COD_MATERIA, COD_GRUPO, COD_IMPARTICION)
 );
 
 /*==============================================================*/
 /* Index: IMPARTICION_PK                                        */
 /*==============================================================*/
 create unique index IMPARTICION_PK on IMPARTICION (
-COD_TIPO_FINAL,
 COD_USUARIO,
 COD_MATERIA,
 COD_GRUPO,
@@ -459,7 +448,6 @@ COD_GRUPO
 /* Index: IMPARTE_FK                                            */
 /*==============================================================*/
 create  index IMPARTE_FK on IMPARTICION (
-COD_TIPO_FINAL,
 COD_USUARIO
 );
 
@@ -563,10 +551,14 @@ COD_AMBIENTE
 /*==============================================================*/
 create table PERIODO_RESERVA (
    COD_PERIODO_RESERVA  SERIAL               not null,
-   COD_TIPO_FINAL       INT4                 not null,
-   FECHA_INICIO_PER     DATE                 not null,
-   FECHA_FIN_PER        DATE                 not null,
+   FECHA_INICIO_GENERAL_PER DATE                 not null,
+   FECHA_FIN_GENERAL_PER DATE                 not null,
+   FECHA_INICIO_DOCENTE_PER DATE                 not null,
+   FECHA_FIN_DOCENTE_PER DATE                 not null,
+   FECHA_INICIO_AUXILIAR_PER DATE                 not null,
+   FECHA_FIN_AUXILIAR_PER DATE                 not null,
    NOTIFICACION_PER     DATE                 not null,
+   ESTADO_VISUALIZACION_PER BOOL                 not null,
    constraint PK_PERIODO_RESERVA primary key (COD_PERIODO_RESERVA)
 );
 
@@ -575,13 +567,6 @@ create table PERIODO_RESERVA (
 /*==============================================================*/
 create unique index PERIODO_RESERVA_PK on PERIODO_RESERVA (
 COD_PERIODO_RESERVA
-);
-
-/*==============================================================*/
-/* Index: HABILITADO1_FK                                        */
-/*==============================================================*/
-create  index HABILITADO1_FK on PERIODO_RESERVA (
-COD_TIPO_FINAL
 );
 
 /*==============================================================*/
@@ -604,27 +589,27 @@ COD_PISO
 /* Table: RESERVA                                               */
 /*==============================================================*/
 create table RESERVA (
-   COD_TIPO_FINAL       INT4                 not null,
    COD_USUARIO          INT4                 not null,
    COD_DIA              INT4                 not null,
    COD_BLOQUE           INT4                 not null,
    COD_AMBIENTE         INT4                 not null,
-   COD_PERIODO_RESERVA  INT4                 not null,
+   COD_GRUPO            INT4                 not null,
+   COD_MATERIA          INT4                 not null,
    COD_RESERVA          SERIAL               not null,
    FECHA_RES            DATE                 not null,
-   constraint PK_RESERVA primary key (COD_TIPO_FINAL, COD_USUARIO, COD_DIA, COD_BLOQUE, COD_AMBIENTE, COD_PERIODO_RESERVA, COD_RESERVA)
+   constraint PK_RESERVA primary key (COD_USUARIO, COD_DIA, COD_BLOQUE, COD_AMBIENTE, COD_GRUPO, COD_MATERIA, COD_RESERVA)
 );
 
 /*==============================================================*/
 /* Index: RESERVA_PK                                            */
 /*==============================================================*/
 create unique index RESERVA_PK on RESERVA (
-COD_TIPO_FINAL,
 COD_USUARIO,
 COD_DIA,
 COD_BLOQUE,
 COD_AMBIENTE,
-COD_PERIODO_RESERVA,
+COD_GRUPO,
+COD_MATERIA,
 COD_RESERVA
 );
 
@@ -632,7 +617,6 @@ COD_RESERVA
 /* Index: REALIZA_FK                                            */
 /*==============================================================*/
 create  index REALIZA_FK on RESERVA (
-COD_TIPO_FINAL,
 COD_USUARIO
 );
 
@@ -658,10 +642,17 @@ COD_AMBIENTE
 );
 
 /*==============================================================*/
-/* Index: TIENE4_FK                                             */
+/* Index: EL1_FK                                                */
 /*==============================================================*/
-create  index TIENE4_FK on RESERVA (
-COD_PERIODO_RESERVA
+create  index EL1_FK on RESERVA (
+COD_GRUPO
+);
+
+/*==============================================================*/
+/* Index: EL2_FK                                                */
+/*==============================================================*/
+create  index EL2_FK on RESERVA (
+COD_MATERIA
 );
 
 /*==============================================================*/
@@ -702,7 +693,6 @@ COD_TIPO_FINAL
 create table USUARIO (
    COD_USUARIO          SERIAL               not null,
    ADM_COD_USUARIO      INT4                 null,
-   COD_TIPO_FINAL       INT4                 null,
    FIN_COD_USUARIO      INT4                 null,
    NOMBRE_USU           CHAR(50)             not null,
    CONTRASENIA_USU      CHAR(150)            not null,
@@ -720,7 +710,6 @@ COD_USUARIO
 /* Index: ES3_FK                                                */
 /*==============================================================*/
 create  index ES3_FK on USUARIO (
-COD_TIPO_FINAL,
 FIN_COD_USUARIO
 );
 
@@ -802,8 +791,8 @@ alter table IMPARTICION
       on delete restrict on update restrict;
 
 alter table IMPARTICION
-   add constraint FK_IMPARTIC_IMPARTE_FINAL foreign key (COD_TIPO_FINAL, COD_USUARIO)
-      references FINAL (COD_TIPO_FINAL, COD_USUARIO)
+   add constraint FK_IMPARTIC_IMPARTE_FINAL foreign key (COD_USUARIO)
+      references FINAL (COD_USUARIO)
       on delete restrict on update restrict;
 
 alter table MENSAJE
@@ -831,9 +820,14 @@ alter table NOTIFICACION_RESERVA
       references AMBIENTE (COD_AMBIENTE)
       on delete restrict on update restrict;
 
-alter table PERIODO_RESERVA
-   add constraint FK_PERIODO__HABILITAD_TIPO_FIN foreign key (COD_TIPO_FINAL)
-      references TIPO_FINAL (COD_TIPO_FINAL)
+alter table RESERVA
+   add constraint FK_RESERVA_EL1_GRUPO foreign key (COD_GRUPO)
+      references GRUPO (COD_GRUPO)
+      on delete restrict on update restrict;
+
+alter table RESERVA
+   add constraint FK_RESERVA_EL2_MATERIA foreign key (COD_MATERIA)
+      references MATERIA (COD_MATERIA)
       on delete restrict on update restrict;
 
 alter table RESERVA
@@ -847,8 +841,8 @@ alter table RESERVA
       on delete restrict on update restrict;
 
 alter table RESERVA
-   add constraint FK_RESERVA_REALIZA_FINAL foreign key (COD_TIPO_FINAL, COD_USUARIO)
-      references FINAL (COD_TIPO_FINAL, COD_USUARIO)
+   add constraint FK_RESERVA_REALIZA_FINAL foreign key (COD_USUARIO)
+      references FINAL (COD_USUARIO)
       on delete restrict on update restrict;
 
 alter table RESERVA
@@ -856,14 +850,9 @@ alter table RESERVA
       references AMBIENTE (COD_AMBIENTE)
       on delete restrict on update restrict;
 
-alter table RESERVA
-   add constraint FK_RESERVA_TIENE4_PERIODO_ foreign key (COD_PERIODO_RESERVA)
-      references PERIODO_RESERVA (COD_PERIODO_RESERVA)
-      on delete restrict on update restrict;
-
 alter table USUARIO
-   add constraint FK_USUARIO_ES3_FINAL foreign key (COD_TIPO_FINAL, FIN_COD_USUARIO)
-      references FINAL (COD_TIPO_FINAL, COD_USUARIO)
+   add constraint FK_USUARIO_ES3_FINAL foreign key (FIN_COD_USUARIO)
+      references FINAL (COD_USUARIO)
       on delete restrict on update restrict;
 
 alter table USUARIO
