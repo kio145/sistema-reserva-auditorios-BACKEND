@@ -1,6 +1,6 @@
 from flask import Blueprint,jsonify,request
 from models.periodoModel import PeriodoModel
-from models.entities.periodo import Periodo
+from models.entities.periodo_reserva import Periodo_Reserva
 
 main = Blueprint('periodo_blueprint',__name__)
 
@@ -23,38 +23,12 @@ def get_periodo_one(id):
     except Exception as ex:
         return jsonify({'message':str(ex)}),500
 
-@main.route('/add', methods=['POST'])
-def add_periodo():
-    try:
-        fecha_inicio_per = request.json['fecha_inicio_per']
-        fecha_fin_per = request.json['fecha_fin_per']
-        periodo = Periodo(fecha_inicio_per = str(fecha_inicio_per), fecha_fin_per = str(fecha_fin_per))
-        affected_rows = PeriodoModel.add_periodo(periodo)
-        if affected_rows == 1:
-            return jsonify(affected_rows)
-        else:
-            return jsonify({'message': "Error al insertar"}), 500
-    except Exception as ex:
-        return jsonify({'message': str(ex)}), 500
-
-@main.route('/delete/<id>', methods=['DELETE'])
-def delete_periodo(id):
-    try:
-        periodo = Periodo(id)
-        affected_rows = PeriodoModel.delete_periodo(periodo)
-        if affected_rows == 1:
-            return jsonify(periodo.cod_periodo)
-        else:
-            return jsonify({'message': "Periodo no eliminado"}), 404
-    except Exception as ex:
-        return jsonify({'message': str(ex)}), 500
-
 @main.route('/update/<id>', methods=['PUT'])
 def update_periodo(id):
     try:
         fecha_inicio_per = request.json['fecha_inicio_per']
         fecha_fin_per = request.json['fecha_fin_per']
-        periodo = Periodo(id, fecha_inicio_per, fecha_fin_per)
+        periodo = Periodo_Reserva(id, fecha_inicio_per, fecha_fin_per)
         affected_rows = PeriodoModel.update_periodo(periodo)
         if affected_rows == 1:
             return jsonify(periodo.cod_periodo)
@@ -63,3 +37,50 @@ def update_periodo(id):
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
 
+
+
+
+
+
+@main.route('/add', methods=['POST'])
+def add_periodo():
+    try:
+        fecha_inicio_general_per = request.json['fecha_inicio_general_per']
+        fecha_fin_general_per = request.json['fecha_fin_general_per']
+        fecha_inicio_docente_per = request.json['fecha_inicio_docente_per']
+        fecha_fin_docente_per = request.json['fecha_fin_docente_per']
+        fecha_inicio_auxiliar_per = request.json['fecha_inicio_auxiliar_per']
+        fecha_fin_auxiliar_per = request.json['fecha_fin_auxiliar_per']
+        notificacion_per = request.json['notificacion_per']
+
+        periodo = Periodo_Reserva(fecha_inicio_general_per = fecha_inicio_general_per, fecha_fin_general_per = fecha_fin_general_per,
+                          fecha_inicio_docente_per = fecha_inicio_docente_per, fecha_fin_docente_per = fecha_fin_docente_per,
+                          fecha_inicio_auxiliar_per = fecha_inicio_auxiliar_per, fecha_fin_auxiliar_per = fecha_fin_auxiliar_per,
+                          notificacion_per = notificacion_per, estado_visualizacion_per = True)
+        affected_rows = PeriodoModel.add_periodo(periodo)
+        if affected_rows == 1:
+            return jsonify(affected_rows)
+        else:
+            return jsonify({'message': "Error al insertar"}), 500
+    except Exception as ex:
+        return jsonify({'message': str(ex)}), 500
+    
+@main.route('/periodo_general')
+def get_periodo_general():
+    try:
+        periodo = PeriodoModel.get_periodo_general()
+        return jsonify(periodo)
+    except Exception as ex:
+        return jsonify({'message':str(ex)}),500
+    
+@main.route('/delete/<id>', methods=['DELETE'])
+def delete_periodo(id):
+    try:
+        periodo_reserva = Periodo_Reserva(id)
+        affected_rows = PeriodoModel.delete_periodo(periodo_reserva)
+        if affected_rows >= 1:
+            return jsonify(periodo_reserva.cod_periodo_reserva)
+        else:
+            return jsonify({'message': "Periodo no eliminado"}), 404
+    except Exception as ex:
+        return jsonify({'message': str(ex)}), 500

@@ -29,3 +29,23 @@ Estas no son mas que las rutas para consumir cierto recurso de la api rest.
 * ruta: ``http://127.0.0.1:5000/ambiente/delete/id``, elimina un ambiente de la base de datos.
 * ruta: ``http://127.0.0.1:5000/ambiente/update/id``, actualiza un ambiente de la base de datos.
 * ruta: ``http://127.0.0.1:5000/ambiente/filter/"filtro"``, nos proporciona la informacion de todos los ambientes registrados en la base de datos pero con la diferencia de realizar filtrados, para ello se recomienda usar este formato de string ``"1,2,9,-1"`` donde ``-1`` indica que no se esta filtrando por ese parametro, el primer parametro es ``Tipo de ambiente``, el segundo es ``Facultad``, el tercero es ``Edificio`` y el ultimo es ``Estado``.
+* ruta: ``http://127.0.0.1:5000/ajuste_ambiente/addUpdate``, nos permite insertar todos los registrios de disponibilidad de un ambiente en especifico para ello se tiene que mandar un json del siguiente formato:
+{
+  ``"cod_ambiente": 2``,
+  ``"configuracion": [
+    [1,0,1,0,0,0,1],
+    [0,0,0,1,0,0,0],
+    [1,0,1,0,0,0,1],
+    [0,0,0,1,0,0,0],
+    [1,0,1,0,0,0,1],
+    [0,0,0,1,0,0,0],
+    [1,0,1,0,0,0,1],
+    [0,0,0,1,0,0,0],
+    [1,0,1,0,0,0,1],
+    [0,0,0,1,1,0,0]
+  ]``,
+  ``fecha_inicio_general_per": "2024-05-01``,
+  ``fecha_fin_general_per": "2024-07-10``
+}
+Cabe recalcar que la matriz solo tiene que ser de ``10 x 7`` y sus valores tienen que ser ``1`` para habilitar el bloque y ``0`` para no abilitar el bloque.
+* ruta: ``http://127.0.0.1:5000/ajuste_ambiente/deleteAll``, eliminara todos los registros de nuestra tabla ajuste_ambiente.

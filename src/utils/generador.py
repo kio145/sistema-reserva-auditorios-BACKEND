@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 class Generador():
     def generadorSql(filtro: tuple):
         sql = 'SELECT a.cod_ambiente, a.nombre_amb, e.nombre_ea, a.capacidad_amb From ambiente a JOIN estado_ambiente e ON a.cod_estado_ambiente = e.cod_estado_ambiente'
@@ -18,6 +20,43 @@ class Generador():
             + (p3 if p3 != '' else '') + (' AND ' if p3 != '' and p4 != '' else '')  + (p4 if p4 != '' else '')
         return sql + ';'
 
+    def generar_dias(configuracion):
+        configuracion_transpuesta = [[fila[i] for fila in configuracion] for i in range(len(configuracion[0]))]
+        dia = 1
+        dias = []
+        for columna in configuracion_transpuesta:
+            if 1 in columna:
+                dias.append(dia)
+            dia += 1
+        return dias
+
+    def generar_dia_bloques(dias,configuracion):
+        dia_bloques = {}
+        bloques = []
+        for dia in dias:
+            i = 1
+            for seleccioando in configuracion:
+                if seleccioando[dia-1] == 1:
+                    bloques.append(i)
+                i += 1
+            dia_bloques[dia] = bloques
+            bloques = []
         
-                
+        return dia_bloques
+
+    def generar_ajustes(desde, hasta, dia_bloques):
+        fecha_inicio = datetime.strptime(desde, '%Y-%m-%d')
+        fecha_fin = datetime.strptime(hasta, '%Y-%m-%d')
+        ajustes = []
+        for dia, bloques in dia_bloques.items():
+            for bloque in bloques:
+                while fecha_inicio <= fecha_fin:
+                    if fecha_inicio.isoweekday() == dia:
+                        ajustes.append((dia,bloque,fecha_inicio.strftime('%Y-%m-%d')))
+                    fecha_inicio += timedelta(days=1)
+                fecha_inicio = datetime.strptime(desde, '%Y-%m-%d')
+        return ajustes
+
+        
+            
 

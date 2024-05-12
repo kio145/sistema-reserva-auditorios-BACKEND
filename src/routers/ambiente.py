@@ -35,7 +35,6 @@ def get_ambientes_filter(filtro):
         return jsonify({'message':str(ex)}), 500
 
 @main.route('/add', methods=['POST'])
-
 def add_ambiente():
     try:
         nombre_amb = request.json['nombre_amb']
