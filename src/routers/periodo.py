@@ -23,20 +23,6 @@ def get_periodo_one(id):
     except Exception as ex:
         return jsonify({'message':str(ex)}),500
 
-@main.route('/update/<id>', methods=['PUT'])
-def update_periodo(id):
-    try:
-        fecha_inicio_per = request.json['fecha_inicio_per']
-        fecha_fin_per = request.json['fecha_fin_per']
-        periodo = Periodo_Reserva(id, fecha_inicio_per, fecha_fin_per)
-        affected_rows = PeriodoModel.update_periodo(periodo)
-        if affected_rows == 1:
-            return jsonify(periodo.cod_periodo)
-        else:
-            return jsonify({'message': "Error al actualizar el periodo"}), 404
-    except Exception as ex:
-        return jsonify({'message': str(ex)}), 500
-
 
 
 
@@ -84,3 +70,28 @@ def delete_periodo(id):
             return jsonify({'message': "Periodo no eliminado"}), 404
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
+    
+@main.route('/update/<id>', methods=['PUT'])
+def update_periodo(id):
+    try:
+        fecha_inicio_general_per = request.json['fecha_inicio_general_per']
+        fecha_fin_general_per = request.json['fecha_fin_general_per']
+        fecha_inicio_docente_per = request.json['fecha_inicio_docente_per']
+        fecha_fin_docente_per = request.json['fecha_fin_docente_per']
+        fecha_inicio_auxiliar_per = request.json['fecha_inicio_auxiliar_per']
+        fecha_fin_auxiliar_per = request.json['fecha_fin_auxiliar_per']
+
+        periodo = Periodo_Reserva(cod_periodo_reserva=id, fecha_inicio_general_per= fecha_inicio_general_per,
+                                  fecha_fin_general_per = fecha_fin_general_per, fecha_inicio_docente_per=fecha_inicio_docente_per,
+                                  fecha_fin_docente_per = fecha_fin_docente_per, fecha_inicio_auxiliar_per = fecha_inicio_auxiliar_per,
+                                  fecha_fin_auxiliar_per= fecha_fin_auxiliar_per
+                                  )
+        affected_rows = PeriodoModel.update_periodo(periodo)
+        if affected_rows == 1:
+            return jsonify(periodo.cod_periodo_reserva)
+        else:
+            return jsonify({'message': "Error al actualizar el periodo"}), 404
+    except Exception as ex:
+        return jsonify({'message': str(ex)}), 500
+    
+

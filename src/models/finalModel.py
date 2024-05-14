@@ -1,6 +1,8 @@
 from database.db import get_connection
-from entities.final import Final
+from .entities.final import Final
 from utils.transformacion import Transformacion
+
+
 class FinalModel():
 
     @classmethod

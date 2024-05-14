@@ -1,4 +1,4 @@
-from entities.usuario import Usuario
+from .usuario import Usuario
 class Administrador(Usuario):
     def __init__(self, cod_usuario=None, nombre_usu=None, contrasenia_usu=None,alias_adm=None):
         super().__init__(cod_usuario, nombre_usu, contrasenia_usu)

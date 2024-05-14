@@ -1,5 +1,5 @@
 from database.db import get_connection
-from entities.administrador import Administrador
+from .entities.administrador import Administrador
 from utils.transformacion import Transformacion
 
 class AdministradorModel():

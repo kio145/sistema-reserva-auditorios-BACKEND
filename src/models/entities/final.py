@@ -1,6 +1,7 @@
-from entities.usuario import Usuario
+from .usuario import Usuario
+
 class Final(Usuario):
-    def __init__(self, cod_usuario=None, nombre_usu=None, contrasenia_usu=None,codigo_sis_fin=None,cod_tipo_final=None):
+    def __init__(self, cod_usuario = None, nombre_usu = None, contrasenia_usu = None,codigo_sis_fin = None,cod_tipo_final = None):
         super().__init__(cod_usuario, nombre_usu, contrasenia_usu)
         self.codigo_sis_fin = codigo_sis_fin
         self.cod_tipo_final = cod_tipo_final
