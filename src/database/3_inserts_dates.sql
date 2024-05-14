@@ -30,7 +30,9 @@ VALUES
     ('Facultad de Ciencias'),
     ('Facultad de Ingeniería'),
     ('Facultad de Artes'),
-    ('Facultad de Derecho');
+    ('Facultad de Derecho'),
+    ('Facultad de Economia'),
+    ('Facultad de Medicina');
 
 /*Tipo ambiente*/
 INSERT INTO TIPO_AMBIENTE (NOMBRE_TA)
