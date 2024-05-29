@@ -18,10 +18,18 @@ VALUES
 /*Edificio*/
 INSERT INTO EDIFICACION (NOMBRE_EDI)
 VALUES 
-    ('Edificio A'),
-    ('Edificio B'),
-    ('Edificio C'),
-    ('Edificio D');
+    ('DPTO. DE BIOLOGIA'),
+    ('DPTO. DE QUIMICA'),
+    ('DPTO. DE FISICA'),
+    ('BLOQUE CENTRAL'),
+    ('BIBLIOTECA FCYT '),
+    ('DPTO. INDUSTRIAL'),
+    ('PLTA. PROCS. INDS'),
+    ('SEC. LAB. MECANICA'),
+    ('EDIF. CAD-CAM'),
+    ('EDIF. ELEKTRO'),
+    ('EDIF. ACADEMCIO 2'),
+    ('EDIF. DE LAB. BASICOS');
 
 
 /*Facultad*/
