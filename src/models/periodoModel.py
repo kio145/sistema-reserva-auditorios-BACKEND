@@ -87,6 +87,27 @@ class PeriodoModel():
             return affected_rows
         except Exception as ex:
             raise Exception(ex)
+    
+    @classmethod
+    def update_periodo(self,periodo):
+        try:
+            connection = get_connection()
+            with connection.cursor() as cursor:
+                cursor.execute('''
+                    UPDATE periodo_reserva 
+                    SET fecha_inicio_general_per = %s, fecha_fin_general_per = %s, fecha_inicio_docente_per = %s, 
+                        fecha_fin_docente_per = %s, fecha_inicio_auxiliar_per = %s, fecha_fin_auxiliar_per = %s,
+                        notificacion_per = %s
+                    WHERE cod_periodo_reserva = %s;
+                ''',(periodo.fecha_inicio_general_per, periodo.fecha_fin_general_per, periodo.fecha_inicio_docente_per, 
+                     periodo.fecha_fin_docente_per, periodo.fecha_inicio_auxiliar_per, periodo.fecha_fin_auxiliar_per, 
+                     periodo.notificacion_per, periodo.cod_periodo_reserva))
+                affected_rows = cursor.rowcount
+                connection.commit()
+            connection.close()
+            return affected_rows
+        except Exception as ex:
+            raise Exception(ex)
         
     @classmethod
     def get_periodo_general(self):
@@ -121,3 +142,4 @@ class PeriodoModel():
             return affected_rows_periodo + affected_rows_detalle_periodo
         except Exception as ex:
             raise Exception(ex)
+
